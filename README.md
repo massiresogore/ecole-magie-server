@@ -12,7 +12,7 @@
 # Créé des issue pour la gestion de chaque entité
 
 # créeer une branch pour chaque entité
-- Artifact
+- git branch artifact-crud
 - Wizard
 - Massire
 
