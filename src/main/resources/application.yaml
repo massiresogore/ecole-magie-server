@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: gestion-utilisateur-online
+  datasource:
+    url: jdbc:h2:mem:ecolemagique
+    username: sa
+    password:
+  jpa:
+    show-sql: true
+api:
+  endpoint:
+    base-url: /api/v1
