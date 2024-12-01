@@ -62,14 +62,25 @@ public class SecurityConfiguration {
 
         return httpSecurity
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-                        .requestMatchers(HttpMethod.GET,this.baseUrl+"/artifacts/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,this.baseUrl+"/users/**").hasAnyAuthority("ROLE_admin","ROLE_user")//protecting endpoint
-                        //.requestMatchers(HttpMethod.POST,this.baseUrl+"/users").authenticated()//protecting endpoint
+                        /*Ecole Admin*/
+                        .requestMatchers(HttpMethod.GET,this.baseUrl+"/users/**").hasAnyAuthority("ROLE_admin")//protecting endpoint
                         .requestMatchers(HttpMethod.POST,this.baseUrl+"/users").hasAuthority("ROLE_admin")//protecting endpoint
-                        .requestMatchers(HttpMethod.PUT,this.baseUrl+"/users/**").hasAnyAuthority("ROLE_admin","ROLE_user")//protecting endpoint
-                        .requestMatchers(HttpMethod.PUT,this.baseUrl+"/artifacts/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,this.baseUrl+"/artifacts").permitAll()
+                        .requestMatchers(HttpMethod.PUT,this.baseUrl+"/users/**").hasAnyAuthority("ROLE_admin")//protecting endpoint
                         .requestMatchers(HttpMethod.DELETE,this.baseUrl+"/users/**").hasAuthority("ROLE_admin")//protecting endpoint
+
+                        /*Artifacts*/
+                        .requestMatchers(HttpMethod.GET,this.baseUrl+"/artifacts/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT,this.baseUrl+"/artifacts/**").hasAnyAuthority("ROLE_admin")
+                        .requestMatchers(HttpMethod.POST,this.baseUrl+"/artifacts").hasAuthority("ROLE_admin")
+                        .requestMatchers(HttpMethod.DELETE,this.baseUrl+"/artifacts/**").hasAuthority("ROLE_admin")
+
+                        /*Wizards*/
+                        .requestMatchers(HttpMethod.GET,this.baseUrl+"/wizards/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT,this.baseUrl+"/wizards/**").hasAnyAuthority("ROLE_admin","ROLE_user")
+                        .requestMatchers(HttpMethod.POST,this.baseUrl+"/wizards").hasAnyAuthority("ROLE_admin")
+                        .requestMatchers(HttpMethod.DELETE,this.baseUrl+"/wizards/**").hasAuthority("ROLE_admin")
+
+                        /*H2 authorization*/
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()//autorise h2-console
                         //allow everything authenticated
                         .anyRequest().authenticated()//Recommand to put this at last

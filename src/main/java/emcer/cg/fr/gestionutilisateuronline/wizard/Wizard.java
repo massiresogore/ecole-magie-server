@@ -6,12 +6,11 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.lang.NonNull;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity
 public class Wizard implements Serializable {
