@@ -52,9 +52,8 @@ public class ArtifactController {
                 StatusCode.SUCCESS,
                 this.artifactToArtifactDtoConverter.convert(
                         this.artifactService.
-                                update(Long.parseLong(String.valueOf(updateId)),
-                                        this.artifactDtoToArtifactConverter.convert(artifactDto)
-                                )
+                                update(updateId, this.artifactDtoToArtifactConverter.convert(artifactDto))
+
                 )
                 );
     }
@@ -67,6 +66,7 @@ public class ArtifactController {
 
     @PostMapping
     public Result save(@Valid @RequestBody ArtifactDto artifactDto) {
+
 
         return new Result(true,
                 "Add Success",

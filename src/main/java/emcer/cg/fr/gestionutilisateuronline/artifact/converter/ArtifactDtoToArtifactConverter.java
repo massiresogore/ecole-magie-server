@@ -23,7 +23,7 @@ private final WizardService wizardService;
                 source.name(),
                 source.description(),
                 source.imageUrl(),
-                this.wizardService.findById(source.ownerId())
+                source.ownerId() !=null  ? this.wizardService.findById(source.ownerId()) :null
 
         );
     }

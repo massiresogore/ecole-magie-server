@@ -63,11 +63,12 @@ public class SecurityConfiguration {
         return httpSecurity
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers(HttpMethod.GET,this.baseUrl+"/artifacts/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,this.baseUrl+"/users/**").hasAuthority("ROLE_admin")//protecting endpoint
+                        .requestMatchers(HttpMethod.GET,this.baseUrl+"/users/**").hasAnyAuthority("ROLE_admin","ROLE_user")//protecting endpoint
                         //.requestMatchers(HttpMethod.POST,this.baseUrl+"/users").authenticated()//protecting endpoint
                         .requestMatchers(HttpMethod.POST,this.baseUrl+"/users").hasAuthority("ROLE_admin")//protecting endpoint
-                        .requestMatchers(HttpMethod.PUT,this.baseUrl+"/users/**").hasAuthority("ROLE_admin")//protecting endpoint
+                        .requestMatchers(HttpMethod.PUT,this.baseUrl+"/users/**").hasAnyAuthority("ROLE_admin","ROLE_user")//protecting endpoint
                         .requestMatchers(HttpMethod.PUT,this.baseUrl+"/artifacts/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,this.baseUrl+"/artifacts").permitAll()
                         .requestMatchers(HttpMethod.DELETE,this.baseUrl+"/users/**").hasAuthority("ROLE_admin")//protecting endpoint
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()//autorise h2-console
                         //allow everything authenticated

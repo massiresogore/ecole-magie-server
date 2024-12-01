@@ -76,7 +76,7 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     Result handleAccessDeniedException(AccessDeniedException exception) {
-        return new Result(false, "No perission", StatusCode.FORBIDDEN,exception.getMessage());
+        return new Result(false, "No permission", StatusCode.FORBIDDEN,exception.getMessage());
     }
 
 

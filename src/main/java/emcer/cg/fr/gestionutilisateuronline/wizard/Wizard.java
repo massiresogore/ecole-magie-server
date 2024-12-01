@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 public class Wizard implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty(message = "name is required.")

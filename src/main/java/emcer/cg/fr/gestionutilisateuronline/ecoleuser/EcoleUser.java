@@ -22,7 +22,7 @@ public class EcoleUser implements Serializable {
 
     @Column(name = "enabled")
     private Boolean enable;
-    @NotEmpty(message = "roles ares required")
+    @NotEmpty(message = "roles are required")
     private String roles; //Space separete string
 
     public EcoleUser() {
