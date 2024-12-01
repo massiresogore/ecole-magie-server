@@ -35,7 +35,6 @@ public class AuthService {
 
         loginResultMap.put("userInfo",userDto);
         loginResultMap.put("token",token);
-
         return loginResultMap;
     }
 }
