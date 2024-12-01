@@ -169,7 +169,7 @@ class ArtifactControllerTest {
                 );
     }
 
-    /*@Test
+    @Test
     void testAddArtifactSuccess() throws Exception {
         //Given
         ArtifactDto artifactDto = new ArtifactDto(
@@ -202,7 +202,7 @@ class ArtifactControllerTest {
                 .andExpect(jsonPath("$.data.description").value(savedArtifact.getDescription()))
                 .andExpect(jsonPath("$.data.imageUrl").value(savedArtifact.getImageUrl())
                 );
-    }*/
+    }
 
     /*@Test
     void testUpdateArtifactSuccess() throws Exception {
@@ -237,8 +237,8 @@ class ArtifactControllerTest {
                 .andExpect(jsonPath("$.data.description").value(updateArtifact.getDescription()))
                 .andExpect(jsonPath("$.data.imageUrl").value(updateArtifact.getImageUrl()));
     }*/
-   /* void testUpdateArtifactSuccess() throws Exception {
     @Test
+    void testUpdateArtifactSuccess() throws Exception {
         // Given
         ArtifactDto artifactDto = new ArtifactDto(1L,
                 "Invisibility Cloak",
@@ -259,15 +259,15 @@ class ArtifactControllerTest {
         this.mockMvc.perform(put(this.baseUrl + "/artifacts/1").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
-                .andExpect(jsonPath("$.message").value("Update Success"))
+                .andExpect(jsonPath("$.message").value("Update success"))
                 .andExpect(jsonPath("$.data.id").value(1L))
                 .andExpect(jsonPath("$.data.name").value(updatedArtifact.getName()))
                 .andExpect(jsonPath("$.data.description").value(updatedArtifact.getDescription()))
                 .andExpect(jsonPath("$.data.imageUrl").value(updatedArtifact.getImageUrl()));
-    }*/
+    }
 
 
-/*
+
     @Test
     void testUpdateArtifactErrorWithNonexistentiId() throws Exception {
         //Given, fournit par le front-end
@@ -294,7 +294,7 @@ class ArtifactControllerTest {
                 .andExpect(jsonPath("$.message").value("Could not find artifact with id:12"))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
-*/
+
 
     @Test
     void testDeleteArtifactSuccess() throws Exception {

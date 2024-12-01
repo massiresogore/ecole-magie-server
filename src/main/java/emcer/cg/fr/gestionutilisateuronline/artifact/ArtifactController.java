@@ -45,7 +45,7 @@ public class ArtifactController {
     * et on le renvoie
     * */
     @PutMapping("/{updateId}")
-    public Result updateArtifactById(@PathVariable("updateId") Long updateId, @RequestBody ArtifactDto artifactDto) {
+    public Result updateArtifactById(@PathVariable("updateId") Long updateId,@Valid @RequestBody ArtifactDto artifactDto) {
 
         return new Result(true,
                 "Update success",

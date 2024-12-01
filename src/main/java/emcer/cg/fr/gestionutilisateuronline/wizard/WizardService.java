@@ -34,7 +34,7 @@ public class WizardService {
     public void delete(Long idWizard)
     {
         Wizard wisardToBeDeleted=  this.wizardRepository.findById(idWizard).
-                orElseThrow(()->new ObjectNotFoundException("name",idWizard));
+                orElseThrow(()->new ObjectNotFoundException(Wizard.class.getSimpleName(),idWizard));
 
         //Avnat de supprimer on doit supprimer les lien entre ces artifacts
         wisardToBeDeleted.removeAllArtifacts();
@@ -43,7 +43,7 @@ public class WizardService {
 
 
     public Wizard findById(Long id) {
-        return wizardRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException("name",id));
+        return wizardRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException(Wizard.class.getSimpleName(),id));
     }
 
     public Wizard update(Long id,Wizard wizard)
@@ -53,7 +53,7 @@ public class WizardService {
                     oldWizard.setName(wizard.getName());
                     return this.wizardRepository.save(oldWizard);
                 })
-                .orElseThrow(()->new ObjectNotFoundException("",id));
+                .orElseThrow(()->new ObjectNotFoundException(Wizard.class.getSimpleName(),id));
     }
 
     public void assignArtifact(Long wizardId, Long artifactId)
@@ -61,12 +61,12 @@ public class WizardService {
 
         //Find artifact by id From DB
         Artifact artifactTobeAssigned = this.artifactRepository.findById(artifactId).orElseThrow(
-                () -> new ObjectNotFoundException("artifact", artifactId)
+                () -> new ObjectNotFoundException(Artifact.class.getSimpleName(), artifactId)
         );
 
         //Find wizard by id from DB
         Wizard wizard = this.wizardRepository.findById(wizardId).orElseThrow(
-                () -> new ObjectNotFoundException("wizard", wizardId)
+                () -> new ObjectNotFoundException(Wizard.class.getSimpleName(), wizardId)
         );
 
         //Artifact assignment

@@ -35,7 +35,7 @@ public class ArtifactService {
             old.setDescription(newArtifact.getDescription());
             old.setImageUrl(newArtifact.getImageUrl());
            return this.artifactRepository.save(old);
-        }).orElseThrow(()->new ObjectNotFoundException(Artifact.class.getName(),artifactId));
+        }).orElseThrow(()->new ObjectNotFoundException(Artifact.class.getSimpleName(),artifactId));
     }
 
     public void delete(Long artifactId){

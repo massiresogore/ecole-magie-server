@@ -132,7 +132,7 @@ class WizardServiceTest {
         //Then
         assertThat(thrown)
                 .isInstanceOf(ObjectNotFoundException.class)
-                .hasMessage("Could not find name with id:4");
+                .hasMessage("Could not find Wizard with id:4");
         verify(wizardRepository,Mockito.times(1)).findById(4L);
     }
 
@@ -258,7 +258,7 @@ class WizardServiceTest {
         //then
         assertThat(thrown)
                 .isInstanceOf(ObjectNotFoundException.class)
-                .hasMessage("Could not find wizard with id:3");
+                .hasMessage("Could not find Wizard with id:3");
         assertThat(a.getOwner().getId()).isEqualTo(2L);
     }
 
@@ -285,6 +285,6 @@ class WizardServiceTest {
         //then
         assertThat(thrown)
                 .isInstanceOf(ObjectNotFoundException.class)
-                .hasMessage("Could not find artifact with id:2");
+                .hasMessage("Could not find Artifact with id:2");
     }
 }

@@ -142,7 +142,7 @@ class ArtifactControllerIntegrationTest {
                 .andExpect(jsonPath("$.message").value("Find All Success"))
                 .andExpect(jsonPath("$.data", Matchers.hasSize(6)));
     }
-/* A faire apres casse tête
+
 
     @Test
     @DisplayName("Check updateArtifact with valid input (PUT)")
@@ -158,7 +158,7 @@ class ArtifactControllerIntegrationTest {
         this.mockMvc.perform(put(this.baseUrl + "/artifacts/2").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
-                .andExpect(jsonPath("$.message").value("Update Success"))
+                .andExpect(jsonPath("$.message").value("Update success"))
                 .andExpect(jsonPath("$.data.id").value(2L))
                 .andExpect(jsonPath("$.data.name").value("Updated artifact name"))
                 .andExpect(jsonPath("$.data.description").value("Updated description"))
@@ -179,7 +179,7 @@ class ArtifactControllerIntegrationTest {
         this.mockMvc.perform(put(this.baseUrl + "/artifacts/10").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
-                .andExpect(jsonPath("$.message").value("Could not find artifact with id:10"))
+                .andExpect(jsonPath("$.message").value("Could not find Artifact with id:10"))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 
@@ -197,7 +197,7 @@ class ArtifactControllerIntegrationTest {
         this.mockMvc.perform(put(this.baseUrl + "/artifacts/1").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.INVALID_ARGUMENT))
-                .andExpect(jsonPath("$.message").value("Provided arguments are invalid, see data for details."))
+                .andExpect(jsonPath("$.message").value("Provided Arguments are invalid, see data for details. "))
                 .andExpect(jsonPath("$.data.name").value("name is required."))
                 .andExpect(jsonPath("$.data.description").value("description is required."))
                 .andExpect(jsonPath("$.data.imageUrl").value("imageUrl is required."));
@@ -215,24 +215,24 @@ class ArtifactControllerIntegrationTest {
         this.mockMvc.perform(delete(this.baseUrl + "/artifacts/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
-                .andExpect(jsonPath("$.message").value("Delete Success"));
+                .andExpect(jsonPath("$.message").value("Artifact deleted"));
         this.mockMvc.perform(get(this.baseUrl + "/artifacts/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
-                .andExpect(jsonPath("$.message").value("Could not find artifact with id:1"))
+                .andExpect(jsonPath("$.message").value("Could not find Artifact not found with id:1"))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 
     @Test
     @DisplayName("Check deleteArtifact with non-existent id (DELETE)")
     void testDeleteArtifactErrorWithNonExistentId() throws Exception {
-        this.mockMvc.perform(delete(this.baseUrl + "/artifacts/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(delete(this.baseUrl + "/artifacts/10").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
-                .andExpect(jsonPath("$.message").value("Could not find artifact with id:1"))
+                .andExpect(jsonPath("$.message").value("Could not find Artifact not found with id:10"))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
-*/
+
 
    /* @Test
     void testFindArtifactsByDescription() throws Exception {
