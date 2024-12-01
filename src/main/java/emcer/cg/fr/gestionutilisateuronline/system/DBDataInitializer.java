@@ -3,6 +3,8 @@ package emcer.cg.fr.gestionutilisateuronline.system;
 
 import emcer.cg.fr.gestionutilisateuronline.artifact.Artifact;
 import emcer.cg.fr.gestionutilisateuronline.artifact.ArtifactRepository;
+import emcer.cg.fr.gestionutilisateuronline.ecoleuser.EcoleUser;
+import emcer.cg.fr.gestionutilisateuronline.ecoleuser.UserService;
 import emcer.cg.fr.gestionutilisateuronline.wizard.Wizard;
 import emcer.cg.fr.gestionutilisateuronline.wizard.WizardRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -15,10 +17,12 @@ public class DBDataInitializer implements CommandLineRunner {
 
     private final ArtifactRepository artifactRepository;
     private final WizardRepository wizardRepository;
+    private final UserService userService;
 
-    public DBDataInitializer(ArtifactRepository artifactRepository, WizardRepository wizardRepository) {
+    public DBDataInitializer(ArtifactRepository artifactRepository, WizardRepository wizardRepository, UserService userService) {
         this.artifactRepository = artifactRepository;
         this.wizardRepository = wizardRepository;
+        this.userService = userService;
     }
 
 
@@ -74,6 +78,32 @@ public class DBDataInitializer implements CommandLineRunner {
         Wizard w3 = new Wizard();
         w3. setName ("Neville Longbotton");
         w3.addArtifact(a5);
+
+
+        //Create the newest users
+        EcoleUser user1 = new EcoleUser();
+        user1.setUsername("massire");
+        user1.setEnable(true);
+        user1.setPassword("123456");
+        user1.setRoles("admin user");
+
+        EcoleUser user2 = new EcoleUser();
+        user2.setUsername("Corintin Rosita");
+        user2.setPassword("123456");
+        user2.setEnable(true);
+        user2.setRoles("user");
+
+        EcoleUser user3 = new EcoleUser();
+        user3.setUsername("Michèl Sébatier");
+        user3.setPassword("123456");
+        user3.setEnable(false);//Désactive le compte
+        user3.setRoles("user");
+
+        //save Users
+        userService.save(user1);
+        userService.save(user2);
+        userService.save(user3);
+
 
 
         this.wizardRepository.save(w1);
