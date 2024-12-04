@@ -1,24 +1,23 @@
-package emcer.cg.fr.gestionutilisateuronline.artifact.converter;
+package emcer.cg.fr.gestionutilisateuronline.power.converter;
 
-import emcer.cg.fr.gestionutilisateuronline.artifact.Artifact;
-import emcer.cg.fr.gestionutilisateuronline.artifact.ArtifactService;
-import emcer.cg.fr.gestionutilisateuronline.artifact.dto.ArtifactDto;
+import emcer.cg.fr.gestionutilisateuronline.power.Power;
+import emcer.cg.fr.gestionutilisateuronline.power.dto.PowerDto;
 import emcer.cg.fr.gestionutilisateuronline.wizard.WizardService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ArtifactDtoToArtifactConverter implements Converter<ArtifactDto, Artifact> {
+public class PowerDtoToPowerConverter implements Converter<PowerDto, Power> {
 private final WizardService wizardService;
 
-    public ArtifactDtoToArtifactConverter(WizardService wizardService) {
+    public PowerDtoToPowerConverter(WizardService wizardService) {
         this.wizardService = wizardService;
     }
 
     @Override
-    public Artifact convert(ArtifactDto source) {
+    public Power convert(PowerDto source) {
 
-        return new Artifact(
+        return new Power(
                 source.id(),
                 source.name(),
                 source.description(),

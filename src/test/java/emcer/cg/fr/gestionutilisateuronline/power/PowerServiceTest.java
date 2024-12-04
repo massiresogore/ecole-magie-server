@@ -1,8 +1,7 @@
-package emcer.cg.fr.gestionutilisateuronline.artifact;
+package emcer.cg.fr.gestionutilisateuronline.power;
 
 import emcer.cg.fr.gestionutilisateuronline.system.exception.ObjectNotFoundException;
 import emcer.cg.fr.gestionutilisateuronline.wizard.Wizard;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,32 +24,32 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles(value = "dev")
-class ArtifactServiceTest {
+class PowerServiceTest {
 
 
     @Mock
-    ArtifactRepository artifactRepository;
+    PowerRepository powerRepository;
 
     @InjectMocks
-    ArtifactService artifactService;
+    PowerService powerService;
 
-    List<Artifact> artifactList = new ArrayList<>();
+    List<Power> powerList = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
-        Artifact a1 = new Artifact();
+        Power a1 = new Power();
         a1.setId(1L);
         a1.setName("Deluminator");
         a1.setDescription("A Deluminator is a device invented by Albus Dumbledore that resembles a cigarette lighter. It is used to remove or absorb (as well as return) the light from any light source to provide cover to the user.");
         a1.setImageUrl("ImageUrl");
-        this.artifactList.add(a1);
+        this.powerList.add(a1);
 
-        Artifact a2 = new Artifact();
+        Power a2 = new Power();
         a2.setId(1L);
         a2.setName("Invisibility Cloak");
         a2.setDescription("An invisibility cloak is used to make the wearer invisible.");
         a2.setImageUrl("ImageUrl2");
-        this.artifactList.add(a2);
+        this.powerList.add(a2);
     }
 
     @Test
@@ -69,7 +68,7 @@ class ArtifactServiceTest {
               "numberOfArtifacts": 2
       }
              */
-        Artifact a = new Artifact();
+        Power a = new Power();
         a.setId(Long.valueOf("1"));
         a.setName("Invisibility Cloak");
         a.setDescription("An invisibility cloak is used to make the wearer invisible.");
@@ -82,11 +81,11 @@ class ArtifactServiceTest {
        // a.setOwner(w);
 
         //Define the behavior of the mock Objet.
-        given(artifactRepository.findById(1L)).willReturn(Optional.of(a));
+        given(powerRepository.findById(1L)).willReturn(Optional.of(a));
 
 
         //When . Act on the target behavior. When steps should cover the method to be tested
-        Artifact returnArtFact =  artifactService.findById(1L);
+        Power returnArtFact =  powerService.findById(1L);
 
         //Then Assert expected outcomes
         assertThat(returnArtFact.getId()).isEqualTo(a.getId());
@@ -94,151 +93,151 @@ class ArtifactServiceTest {
         assertThat(returnArtFact.getDescription()).isEqualTo(a.getDescription());
         assertThat(returnArtFact.getImageUrl()).isEqualTo(a.getImageUrl());
 
-        verify(artifactRepository, times(1)).findById(1L);
+        verify(powerRepository, times(1)).findById(1L);
     }
 
     @Test
     void testFindByIdNotFound()
     {
         //Given
-        given(artifactRepository.findById(Mockito.any(Long.class))).willReturn(Optional.empty());
+        given(powerRepository.findById(Mockito.any(Long.class))).willReturn(Optional.empty());
 
 
         //When
-        //Artifact returnArtFact =  artifactService.findById("1250808601744904192");
+        //Power returnArtFact =  artifactService.findById("1250808601744904192");
         Throwable thrown = catchThrowable(()->{
-            Artifact returnArtFact =  artifactService.findById(1L);
+            Power returnArtFact =  powerService.findById(1L);
         });
 
         //Then
         assertThat(thrown)
                 .isInstanceOf(ObjectNotFoundException.class)
-                .hasMessage("Could not find Artifact not found with id:1");
+                .hasMessage("Could not find Power not found with id:1");
 
-        verify(artifactRepository, times(1)).findById(Long.valueOf("1"));
+        verify(powerRepository, times(1)).findById(Long.valueOf("1"));
     }
 
     @Test
     void testFindAllSuccess()
     {
         //Given
-        given(artifactRepository.findAll()).willReturn(this.artifactList);
+        given(powerRepository.findAll()).willReturn(this.powerList);
 
         //When
-        List<Artifact> actualArtifacts = artifactService.findAll();
+        List<Power> actualPowers = powerService.findAll();
 
         //Then
-        assertThat(actualArtifacts.size()).isEqualTo(this.artifactList.size());
+        assertThat(actualPowers.size()).isEqualTo(this.powerList.size());
         //artifactRepository doit etre appelé une fois
-        verify(artifactRepository, times(1)).findAll();
+        verify(powerRepository, times(1)).findAll();
     }
 
     @Test
     void testSaveSuccess()
     {
         //Given
-        Artifact artifact = new Artifact();
-        artifact.setId(1L);
-        artifact.setName("Artifact 3");
-        artifact.setDescription("Description...");
-        artifact.setImageUrl("Image Url");
+        Power power = new Power();
+        power.setId(1L);
+        power.setName("Power 3");
+        power.setDescription("Description...");
+        power.setImageUrl("Image Url");
 
 //        given(1L).willReturn(1L);
-        given(artifactRepository.save(artifact)).willReturn(artifact);
+        given(powerRepository.save(power)).willReturn(power);
 
         //When
-        Artifact savedArtifact = artifactService.save(artifact);
+        Power savedPower = powerService.save(power);
 
         //then
-        assertThat(savedArtifact.getId()).isEqualTo(1L);
-        assertThat(savedArtifact.getName()).isEqualTo(artifact.getName());
-        assertThat(savedArtifact.getDescription()).isEqualTo(artifact.getDescription());
-        assertThat(savedArtifact.getImageUrl()).isEqualTo(artifact.getImageUrl());
-        verify(artifactRepository, times(1)).save(artifact);
+        assertThat(savedPower.getId()).isEqualTo(1L);
+        assertThat(savedPower.getName()).isEqualTo(power.getName());
+        assertThat(savedPower.getDescription()).isEqualTo(power.getDescription());
+        assertThat(savedPower.getImageUrl()).isEqualTo(power.getImageUrl());
+        verify(powerRepository, times(1)).save(power);
     }
 
     @Test
     void testUpdateSuccess()
     {
         //Given
-        Artifact oldArtifact = new Artifact();
-        oldArtifact.setId(1L);
-        oldArtifact.setName("Invisibility Cloak");
-        oldArtifact.setDescription("An invisibility cloak is used to make the wearer invisible.");
-        oldArtifact.setImageUrl("ImageUrl");
+        Power oldPower = new Power();
+        oldPower.setId(1L);
+        oldPower.setName("Invisibility Cloak");
+        oldPower.setDescription("An invisibility cloak is used to make the wearer invisible.");
+        oldPower.setImageUrl("ImageUrl");
 
-        Artifact  update = new Artifact();
+        Power update = new Power();
         //update.setId("1250808601744904192");La doc n'a pas d'id, donc initule
         update.setName("Invisibility Cloak");
         update.setDescription("A new Description");
         update.setImageUrl("ImageUrl");
 
-        given(artifactRepository.findById(1L)).willReturn(Optional.of(oldArtifact));
-        given(artifactRepository.save(oldArtifact)).willReturn(oldArtifact);
+        given(powerRepository.findById(1L)).willReturn(Optional.of(oldPower));
+        given(powerRepository.save(oldPower)).willReturn(oldPower);
 
         //When
-        Artifact updatedArtifact = artifactService.update(1L, update);
+        Power updatedPower = powerService.update(1L, update);
 
         //Then
-        assertThat(updatedArtifact.getId()).isEqualTo(1L);
-        assertThat(updatedArtifact.getDescription()).isEqualTo(update.getDescription());
-        verify(artifactRepository, times(1)).findById(1L);
-        verify(artifactRepository, times(1)).save(oldArtifact);
+        assertThat(updatedPower.getId()).isEqualTo(1L);
+        assertThat(updatedPower.getDescription()).isEqualTo(update.getDescription());
+        verify(powerRepository, times(1)).findById(1L);
+        verify(powerRepository, times(1)).save(oldPower);
     }
 
     @Test
     void testUpdateNotFound()
     {
-        //Given(Artifact qui a été transmis)
-        Artifact  update = new Artifact();
+        //Given(Power qui a été transmis)
+        Power update = new Power();
         update.setId(1L);
         update.setName("Invisibility Cloak");
         update.setDescription("A new Description");
         update.setImageUrl("ImageUrl");
 
-        given(artifactRepository.findById(1L)).willReturn(Optional.empty());
+        given(powerRepository.findById(1L)).willReturn(Optional.empty());
 
         //When
         assertThrows(ObjectNotFoundException.class,()->{
-            artifactService.update(1L,update);
+            powerService.update(1L,update);
         });
 
         //Then(assurer que la recherche Id, et save soit appellé au moins une fois)
-        verify(artifactRepository, times(1)).findById(1L);
+        verify(powerRepository, times(1)).findById(1L);
     }
 
     @Test
     void testDeleteSuccess()
     {
         //Given
-        Artifact artifact = new Artifact();
-        artifact.setId(1L);
-        artifact.setName("Invisibility Cloak");
-        artifact.setDescription("An invisibility cloak is used to make the wearer invisible.");
-        artifact.setImageUrl("ImageUrl2");
+        Power power = new Power();
+        power.setId(1L);
+        power.setName("Invisibility Cloak");
+        power.setDescription("An invisibility cloak is used to make the wearer invisible.");
+        power.setImageUrl("ImageUrl2");
 
-        given(artifactRepository.findById(1L)).willReturn(Optional.of(artifact));
-        doNothing().when(artifactRepository).deleteById(1L);//une fois que cette méthode est appellé , ne fait rien
+        given(powerRepository.findById(1L)).willReturn(Optional.of(power));
+        doNothing().when(powerRepository).deleteById(1L);//une fois que cette méthode est appellé , ne fait rien
 
         //When
-        artifactService.delete(1L);
+        powerService.delete(1L);
 
         //Then
-        verify(artifactRepository, times(1)).deleteById(1L);
+        verify(powerRepository, times(1)).deleteById(1L);
 
     }
     @Test
     void testDeleteNotFound()
     {
         //Given
-        given(artifactRepository.findById(1L)).willReturn(Optional.empty());
+        given(powerRepository.findById(1L)).willReturn(Optional.empty());
 
         //When
         assertThrows(ObjectNotFoundException.class,()->{
-            artifactService.delete(1L);
+            powerService.delete(1L);
         });
         //Then
-        verify(artifactRepository, times(1)).findById(1L);
+        verify(powerRepository, times(1)).findById(1L);
 
     }
 

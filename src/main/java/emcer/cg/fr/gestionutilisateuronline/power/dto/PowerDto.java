@@ -1,8 +1,7 @@
-package emcer.cg.fr.gestionutilisateuronline.artifact.dto;
-import emcer.cg.fr.gestionutilisateuronline.wizard.Wizard;
+package emcer.cg.fr.gestionutilisateuronline.power.dto;
 import jakarta.validation.constraints.NotEmpty;
 
-public record ArtifactDto(
+public record PowerDto(
    Long id,
    @NotEmpty(message = "name is required.") String name,
    @NotEmpty(message = "description is required.") String description,

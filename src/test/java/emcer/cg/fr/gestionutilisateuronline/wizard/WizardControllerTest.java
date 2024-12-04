@@ -2,7 +2,7 @@ package emcer.cg.fr.gestionutilisateuronline.wizard;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import emcer.cg.fr.gestionutilisateuronline.artifact.Artifact;
+import emcer.cg.fr.gestionutilisateuronline.power.Power;
 import emcer.cg.fr.gestionutilisateuronline.system.StatusCode;
 import emcer.cg.fr.gestionutilisateuronline.system.exception.ObjectNotFoundException;
 import emcer.cg.fr.gestionutilisateuronline.wizard.dto.WizardDto;
@@ -51,37 +51,37 @@ class WizardControllerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        Artifact a1 = new Artifact();
+        Power a1 = new Power();
         a1.setId(1L);
         a1.setName("Deluminator");
         a1.setDescription("A Deluminator is a device invented by Albus Dumbledore that resembles a cigarette lighter. It is used to remove or absorb (as well as return) the light from any light source to provide cover to the user.");
         a1.setImageUrl("ImageUrl");
 
-        Artifact a2 = new Artifact();
+        Power a2 = new Power();
         a2.setId(2L);
         a2.setName("Invisibility Cloak");
         a2.setDescription("An invisibility cloak is used to make the wearer invisible.");
         a2.setImageUrl("ImageUrl");
 
-        Artifact a3 = new Artifact();
+        Power a3 = new Power();
         a3.setId(3L);
         a3.setName("Elder Wand");
         a3.setDescription("The Elder Wand, known throughout history as the Deathstick or the Wand of Destiny, is an extremely powerful wand made of elder wood with a core of Thestral tail hair.");
         a3.setImageUrl("ImageUrl");
 
-        Artifact a4 = new Artifact();
+        Power a4 = new Power();
         a4.setId(4L);
         a4.setName("The Marauder's Map");
         a4.setDescription("A magical map of Hogwarts created by Remus Lupin, Peter Pettigrew, Sirius Black, and James Potter while they were students at Hogwarts.");
         a4.setImageUrl("ImageUrl");
 
-        Artifact a5 = new Artifact();
+        Power a5 = new Power();
         a5.setId(5L);
         a5.setName("The Sword Of Gryffindor");
         a5.setDescription("A goblin-made sword adorned with large rubies on the pommel. It was once owned by Godric Gryffindor, one of the medieval founders of Hogwarts.");
         a5.setImageUrl("ImageUrl");
 
-        Artifact a6 = new Artifact();
+        Power a6 = new Power();
         a6.setId(6L);
         a6.setName("Resurrection Stone");
         a6.setDescription("The Resurrection Stone allows the holder to bring back deceased loved ones, in a semi-physical form, and communicate with them.");
@@ -252,7 +252,7 @@ class WizardControllerTest {
         this.mockMvc.perform(put(this.baseUrl + "/wizards/2/artifacts/1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
-                .andExpect(jsonPath("$.message").value("Artifact assignment success"))
+                .andExpect(jsonPath("$.message").value("Power assignment success"))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 

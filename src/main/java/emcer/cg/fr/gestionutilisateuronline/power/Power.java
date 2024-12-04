@@ -1,13 +1,12 @@
-package emcer.cg.fr.gestionutilisateuronline.artifact;
+package emcer.cg.fr.gestionutilisateuronline.power;
 
 import emcer.cg.fr.gestionutilisateuronline.wizard.Wizard;
 import jakarta.persistence.*;
 
-import java.awt.*;
 import java.io.Serializable;
 
 @Entity
-public class Artifact implements Serializable {
+public class Power implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,18 +17,18 @@ public class Artifact implements Serializable {
     @ManyToOne
     private Wizard owner;
 
-    public Artifact() {
+    public Power() {
     }
 
 
-    public Artifact(Long id, String name, String description, String imageUrl) {
+    public Power(Long id, String name, String description, String imageUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.imageUrl = imageUrl;
     }
 
-    public Artifact(Long id, String name, String description, String imageUrl, Wizard owner) {
+    public Power(Long id, String name, String description, String imageUrl, Wizard owner) {
         this.id = id;
         this.name = name;
         this.description = description;

@@ -214,7 +214,7 @@ class WizardControllerIntegrationTest {
         this.mockMvc.perform(put(this.baseUrl + "/wizards/2/artifacts/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
-                .andExpect(jsonPath("$.message").value("Artifact assignment success"))
+                .andExpect(jsonPath("$.message").value("Power assignment success"))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 
@@ -234,7 +234,7 @@ class WizardControllerIntegrationTest {
         this.mockMvc.perform(put(this.baseUrl + "/wizards/2/artifacts/9").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
-                .andExpect(jsonPath("$.message").value("Could not find Artifact with id:9"))
+                .andExpect(jsonPath("$.message").value("Could not find Power with id:9"))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 

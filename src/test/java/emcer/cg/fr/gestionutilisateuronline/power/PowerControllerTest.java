@@ -1,32 +1,25 @@
-package emcer.cg.fr.gestionutilisateuronline.artifact;
+package emcer.cg.fr.gestionutilisateuronline.power;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import emcer.cg.fr.gestionutilisateuronline.artifact.dto.ArtifactDto;
+import emcer.cg.fr.gestionutilisateuronline.power.dto.PowerDto;
 import emcer.cg.fr.gestionutilisateuronline.system.StatusCode;
 import emcer.cg.fr.gestionutilisateuronline.system.exception.ObjectNotFoundException;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.doNothing;
@@ -36,13 +29,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
-class ArtifactControllerTest {
+class PowerControllerTest {
 
     @Autowired
     MockMvc mockMvc;
 
     @MockitoBean
-    ArtifactService artifactService;
+    PowerService powerService;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -51,53 +44,53 @@ class ArtifactControllerTest {
     @Value("${api.endpoint.base-url}")
     String baseUrl;
 
-    List<Artifact> artifacts;
+    List<Power> powers;
 
     @BeforeEach
     void setUp() {
-        this.artifacts = new ArrayList<>();
+        this.powers = new ArrayList<>();
 
-        Artifact a1 = new Artifact();
+        Power a1 = new Power();
         a1.setId(1L);
         a1.setName("Deluminator");
         a1.setDescription("A Deluminator is a device invented by Albus Dumbledore that resembles a cigarette lighter. It is used to remove or absorb (as well as return) the light from any light source to provide cover to the user.");
         a1.setImageUrl("ImageUrl");
-        this.artifacts.add(a1);
+        this.powers.add(a1);
 
-        Artifact a2 = new Artifact();
+        Power a2 = new Power();
         a2.setId(2L);
         a2.setName("Invisibility Cloak");
         a2.setDescription("An invisibility cloak is used to make the wearer invisible.");
         a2.setImageUrl("ImageUrl2");
-        this.artifacts.add(a2);
+        this.powers.add(a2);
 
-        Artifact a3 = new Artifact();
+        Power a3 = new Power();
         a3.setId(3L);
         a3.setName("Elder Wand");
         a3.setDescription("The Elder Wand, known throughout history as the Deathstick or the Wand of Destiny, is an extremely powerful wand made of elder wood with a core of Thestral tail hair.");
         a3.setImageUrl("ImageUrl3");
-        this.artifacts.add(a3);
+        this.powers.add(a3);
 
-        Artifact a4 = new Artifact();
+        Power a4 = new Power();
         a4.setId(4L);
         a4.setName("The Marauder's Map");
         a4.setDescription("A magical map of Hogwarts created by Remus Lupin, Peter Pettigrew, Sirius Black, and James Potter while they were students at Hogwarts.");
         a4.setImageUrl("ImageUrl4");
-        this.artifacts.add(a4);
+        this.powers.add(a4);
 
-        Artifact a5 = new Artifact();
+        Power a5 = new Power();
         a5.setId(5L);
         a5.setName("The Sword Of Gryffindor");
         a5.setDescription("A goblin-made sword adorned with large rubies on the pommel. It was once owned by Godric Gryffindor, one of the medieval founders of Hogwarts.");
         a5.setImageUrl("ImageUrl5");
-        this.artifacts.add(a5);
+        this.powers.add(a5);
 
-        Artifact a6 = new Artifact();
+        Power a6 = new Power();
         a6.setId(6L);
         a6.setName("Resurrection Stone");
         a6.setDescription("The Resurrection Stone allows the holder to bring back deceased loved ones, in a semi-physical form, and communicate with them.");
         a6.setImageUrl("ImageUrl6");
-        this.artifacts.add(a6);
+        this.powers.add(a6);
     }
 
 
@@ -120,7 +113,7 @@ class ArtifactControllerTest {
         }
          */
         //Given
-        given(artifactService.findById(1L)).willThrow(new ObjectNotFoundException("artifact",1L));
+        given(powerService.findById(1L)).willThrow(new ObjectNotFoundException("artifact",1L));
         //When(86) and then
         /*Fake http GET Request*/
         this.mockMvc.perform(MockMvcRequestBuilders.get(baseUrl+"/artifacts/1")
@@ -136,7 +129,7 @@ class ArtifactControllerTest {
     @Test
     void testFindArtifactByIdSuccess() throws Exception {
         //Given
-        given(artifactService.findById(1L)).willReturn(this.artifacts.get(0));
+        given(powerService.findById(1L)).willReturn(this.powers.get(0));
         //When and then
         /*Fake http GET Request*/
         this.mockMvc.perform(MockMvcRequestBuilders.get(baseUrl+"/artifacts/1") .accept(MediaType.APPLICATION_JSON))
@@ -150,7 +143,7 @@ class ArtifactControllerTest {
     @Test
     void testAllArtifactsSuccess() throws Exception {
         //Given
-        given(this.artifactService.findAll()).willReturn(artifacts);
+        given(this.powerService.findAll()).willReturn(powers);
         //Wen and Then
         this.mockMvc.perform(MockMvcRequestBuilders.
                         get(baseUrl+"/artifacts").accept(MediaType.APPLICATION_JSON)
@@ -158,7 +151,7 @@ class ArtifactControllerTest {
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Find All Success"))
-                .andExpect(jsonPath("$.data", Matchers.hasSize(this.artifacts.size())))
+                .andExpect(jsonPath("$.data", Matchers.hasSize(this.powers.size())))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Find All Success"))
@@ -172,7 +165,7 @@ class ArtifactControllerTest {
     @Test
     void testAddArtifactSuccess() throws Exception {
         //Given
-        ArtifactDto artifactDto = new ArtifactDto(
+        PowerDto powerDto = new PowerDto(
                 2L,
                 "Massire",
                 "Etudiant 3em année Web",
@@ -180,14 +173,14 @@ class ArtifactControllerTest {
                 null
         );
         //fake input data to define output methode
-        String jsonArt =  this.objectMapper.writeValueAsString(artifactDto);
-        Artifact savedArtifact = new Artifact();
-        savedArtifact.setId(1L);
-        savedArtifact.setName("Massire");
-        savedArtifact.setDescription("Etudiant 3em année Web");
-        savedArtifact.setImageUrl("massire.png");
+        String jsonArt =  this.objectMapper.writeValueAsString(powerDto);
+        Power savedPower = new Power();
+        savedPower.setId(1L);
+        savedPower.setName("Massire");
+        savedPower.setDescription("Etudiant 3em année Web");
+        savedPower.setImageUrl("massire.png");
         //Simulation de donnée qui provient du front-end
-        given(this.artifactService.save(Mockito.any(Artifact.class))).willReturn(savedArtifact);
+        given(this.powerService.save(Mockito.any(Power.class))).willReturn(savedPower);
 
         //When and Then
         this.mockMvc.perform(MockMvcRequestBuilders.post(baseUrl+"/artifacts")
@@ -198,16 +191,16 @@ class ArtifactControllerTest {
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Add Success"))
                 .andExpect(jsonPath("$.data.id").isNotEmpty())
-                .andExpect(jsonPath("$.data.name").value(savedArtifact.getName()))
-                .andExpect(jsonPath("$.data.description").value(savedArtifact.getDescription()))
-                .andExpect(jsonPath("$.data.imageUrl").value(savedArtifact.getImageUrl())
+                .andExpect(jsonPath("$.data.name").value(savedPower.getName()))
+                .andExpect(jsonPath("$.data.description").value(savedPower.getDescription()))
+                .andExpect(jsonPath("$.data.imageUrl").value(savedPower.getImageUrl())
                 );
     }
 
     /*@Test
     void testUpdateArtifactSuccess() throws Exception {
         //Given, fournit par le front-end
-        ArtifactDto artifactDto = new ArtifactDto(
+        PowerDto artifactDto = new PowerDto(
                 1L,
                 "Invisibility Cloak",
                 "A new Description",
@@ -216,16 +209,16 @@ class ArtifactControllerTest {
         );
         String json = this.objectMapper.writeValueAsString(artifactDto);//Reçu depuis le fropnt-end
 
-        Artifact updateArtifact = new Artifact();
+        Power updateArtifact = new Power();
         updateArtifact.setId(1L);
         updateArtifact.setName("Invisibility Cloak");
         updateArtifact.setDescription("A new Description");
         updateArtifact.setImageUrl("ImageUrl");
 
-        given(this.artifactService.update(eq(1L),Mockito.any(Artifact.class))).willReturn(updateArtifact);
+        given(this.artifactService.update(eq(1L),Mockito.any(Power.class))).willReturn(updateArtifact);
 
         //When and Then
-        this.mockMvc.perform(MockMvcRequestBuilders.put(baseUrl+"/artifacts/1")
+        this.mockMvc.perform(MockMvcRequestBuilders.put(baseUrl+"/powers/1")
                         .content(json)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -240,20 +233,20 @@ class ArtifactControllerTest {
     @Test
     void testUpdateArtifactSuccess() throws Exception {
         // Given
-        ArtifactDto artifactDto = new ArtifactDto(1L,
+        PowerDto powerDto = new PowerDto(1L,
                 "Invisibility Cloak",
                 "A new description.",
                 "ImageUrl",
                 null);
-        String json = this.objectMapper.writeValueAsString(artifactDto);
+        String json = this.objectMapper.writeValueAsString(powerDto);
 
-        Artifact updatedArtifact = new Artifact();
-        updatedArtifact.setId(1L);
-        updatedArtifact.setName("Invisibility Cloak");
-        updatedArtifact.setDescription("A new description.");
-        updatedArtifact.setImageUrl("ImageUrl");
+        Power updatedPower = new Power();
+        updatedPower.setId(1L);
+        updatedPower.setName("Invisibility Cloak");
+        updatedPower.setDescription("A new description.");
+        updatedPower.setImageUrl("ImageUrl");
 
-        given(this.artifactService.update(eq(1L), Mockito.any(Artifact.class))).willReturn(updatedArtifact);
+        given(this.powerService.update(eq(1L), Mockito.any(Power.class))).willReturn(updatedPower);
 
         // When and then
         this.mockMvc.perform(put(this.baseUrl + "/artifacts/1").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
@@ -261,9 +254,9 @@ class ArtifactControllerTest {
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Update success"))
                 .andExpect(jsonPath("$.data.id").value(1L))
-                .andExpect(jsonPath("$.data.name").value(updatedArtifact.getName()))
-                .andExpect(jsonPath("$.data.description").value(updatedArtifact.getDescription()))
-                .andExpect(jsonPath("$.data.imageUrl").value(updatedArtifact.getImageUrl()));
+                .andExpect(jsonPath("$.data.name").value(updatedPower.getName()))
+                .andExpect(jsonPath("$.data.description").value(updatedPower.getDescription()))
+                .andExpect(jsonPath("$.data.imageUrl").value(updatedPower.getImageUrl()));
     }
 
 
@@ -271,18 +264,18 @@ class ArtifactControllerTest {
     @Test
     void testUpdateArtifactErrorWithNonexistentiId() throws Exception {
         //Given, fournit par le front-end
-        ArtifactDto artifactDto = new ArtifactDto(
+        PowerDto powerDto = new PowerDto(
                 12L,
                 "Invisibility Cloak",
                 "A new Description",
                 "ImageUrl",
                 null
         );
-        String json = this.objectMapper.writeValueAsString(artifactDto);//Reçu depuis le fropnt-end
+        String json = this.objectMapper.writeValueAsString(powerDto);//Reçu depuis le fropnt-end
 
 
 
-        given(this.artifactService.update(eq(12L),Mockito.any(Artifact.class))).willThrow(new ObjectNotFoundException("artifact",12L));
+        given(this.powerService.update(eq(12L),Mockito.any(Power.class))).willThrow(new ObjectNotFoundException("artifact",12L));
 
         //When and Then
         this.mockMvc.perform(put(baseUrl+"/artifacts/12")
@@ -299,21 +292,21 @@ class ArtifactControllerTest {
     @Test
     void testDeleteArtifactSuccess() throws Exception {
         //Given
-        doNothing().when(this.artifactService).delete(1L);
+        doNothing().when(this.powerService).delete(1L);
 
         //When and Then
         this.mockMvc.perform(MockMvcRequestBuilders.delete(baseUrl+"/artifacts/1")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
-                .andExpect(jsonPath("$.message").value("Artifact deleted"))
+                .andExpect(jsonPath("$.message").value("Power deleted"))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 
     @Test
     void testDeleteArtifactErrorWithNoExistId() throws Exception {
         //Given
-        doThrow(new ObjectNotFoundException("artifact",12L)).when(this.artifactService).delete(12L);
+        doThrow(new ObjectNotFoundException("artifact",12L)).when(this.powerService).delete(12L);
         //When and Then
         this.mockMvc.perform(MockMvcRequestBuilders.delete(baseUrl+"/artifacts/12")
                         .accept(MediaType.APPLICATION_JSON))

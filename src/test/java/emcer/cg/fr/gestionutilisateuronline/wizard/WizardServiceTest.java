@@ -1,7 +1,7 @@
 package emcer.cg.fr.gestionutilisateuronline.wizard;
 
-import emcer.cg.fr.gestionutilisateuronline.artifact.Artifact;
-import emcer.cg.fr.gestionutilisateuronline.artifact.ArtifactRepository;
+import emcer.cg.fr.gestionutilisateuronline.power.Power;
+import emcer.cg.fr.gestionutilisateuronline.power.PowerRepository;
 import emcer.cg.fr.gestionutilisateuronline.system.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ class WizardServiceTest {
     WizardRepository wizardRepository;
 
     @Mock
-    ArtifactRepository artifactRepository;
+    PowerRepository powerRepository;
 
 
     @InjectMocks
@@ -93,16 +93,16 @@ class WizardServiceTest {
     @Test
     void findByIdSuccess()
     {
-        Artifact artifact = new Artifact();
-        artifact.setId(1L);
-        artifact.setName("Resurrection Stone");
-        artifact.setImageUrl("ImageUrl6");
-        artifact.setDescription("The Resurrection Stone allows the holder to bring back deceased loved ones, in a semi-physical form, and communicate with them.");
+        Power power = new Power();
+        power.setId(1L);
+        power.setName("Resurrection Stone");
+        power.setImageUrl("ImageUrl6");
+        power.setDescription("The Resurrection Stone allows the holder to bring back deceased loved ones, in a semi-physical form, and communicate with them.");
 
         Wizard wizard = new Wizard();
         wizard.setId(4L);
         wizard.setName("Massire");
-        wizard.addArtifact(artifact);
+        wizard.addArtifact(power);
 
         given(wizardRepository.findById(4L)).willReturn(Optional.of(wizard));
 
@@ -140,16 +140,16 @@ class WizardServiceTest {
     void testUpdateSuccess()
     {
         //Given
-        Artifact oldArtifact = new Artifact();
-        oldArtifact.setId(2L);
-        oldArtifact.setName("Invisibility Cloak");
-        oldArtifact.setDescription("An invisibility cloak is used to make the wearer invisible.");
-        oldArtifact.setImageUrl("ImageUrl");
+        Power oldPower = new Power();
+        oldPower.setId(2L);
+        oldPower.setName("Invisibility Cloak");
+        oldPower.setDescription("An invisibility cloak is used to make the wearer invisible.");
+        oldPower.setImageUrl("ImageUrl");
 
         Wizard oldWizard = new Wizard();
         oldWizard.setId(1L);
         oldWizard.setName("Massire");
-        oldWizard.addArtifact(oldArtifact);
+        oldWizard.addArtifact(oldPower);
 
         Wizard updateWizard = new Wizard();
         updateWizard.setId(1L);
@@ -205,7 +205,7 @@ class WizardServiceTest {
     void testAssignArtifactSuccess()
     {
         //Given
-        Artifact a = new Artifact();
+        Power a = new Power();
         a.setId(2L);
         a.setName("Invisibility Cloak");
         a.setDescription("An invisibility cloak is used to make the wearer invisible.");
@@ -220,7 +220,7 @@ class WizardServiceTest {
         w3.setId(3L);
         w3.setName("Neville Longbottom");
 
-        given(this.artifactRepository.findById(2L)).willReturn(Optional.of(a));
+        given(this.powerRepository.findById(2L)).willReturn(Optional.of(a));
         given(this.wizardRepository.findById(3L)).willReturn(Optional.of(w3));
 
         //When
@@ -235,7 +235,7 @@ class WizardServiceTest {
     void testAssignmentArtifactErrorWithNonExistentWizardId()
     {
         //Given
-        Artifact a = new Artifact();
+        Power a = new Power();
         a.setId(2L);
         a.setName("Invisibility Cloak");
         a.setDescription("An invisibility cloak is used to make the wearer invisible.");
@@ -247,7 +247,7 @@ class WizardServiceTest {
         w2.addArtifact(a);
 
 
-        given(this.artifactRepository.findById(2L)).willReturn(Optional.of(a));
+        given(this.powerRepository.findById(2L)).willReturn(Optional.of(a));
         given(this.wizardRepository.findById(3L)).willReturn(Optional.empty());
 
         //When
@@ -275,7 +275,7 @@ class WizardServiceTest {
                 w3.setName("Neville Longbottom");
          */
 
-        given(this.artifactRepository.findById(2L)).willReturn(Optional.empty());
+        given(this.powerRepository.findById(2L)).willReturn(Optional.empty());
 
         //When
         Throwable thrown = assertThrows(ObjectNotFoundException.class,()->{
@@ -285,6 +285,6 @@ class WizardServiceTest {
         //then
         assertThat(thrown)
                 .isInstanceOf(ObjectNotFoundException.class)
-                .hasMessage("Could not find Artifact with id:2");
+                .hasMessage("Could not find Power with id:2");
     }
 }

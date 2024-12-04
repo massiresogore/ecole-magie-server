@@ -1,4 +1,4 @@
-package emcer.cg.fr.gestionutilisateuronline.artifact;
+package emcer.cg.fr.gestionutilisateuronline.power;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import emcer.cg.fr.gestionutilisateuronline.system.StatusCode;
@@ -19,11 +19,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -32,10 +27,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@DisplayName("Integration tests for Artifact API endpoints")
+@DisplayName("Integration tests for Power API endpoints")
 @Tag("integration")
 @ActiveProfiles(value = "dev")
-class ArtifactControllerIntegrationTest {
+class PowerControllerIntegrationTest {
 
     @Autowired
     MockMvc mockMvc;
@@ -88,7 +83,7 @@ class ArtifactControllerIntegrationTest {
         this.mockMvc.perform(get(this.baseUrl + "/artifacts/10").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
-                .andExpect(jsonPath("$.message").value("Could not find Artifact not found with id:10"))
+                .andExpect(jsonPath("$.message").value("Could not find Power not found with id:10"))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 
@@ -96,14 +91,14 @@ class ArtifactControllerIntegrationTest {
     @DisplayName("Check addArtifact with valid input (POST)")
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void testAddArtifactSuccess() throws Exception {
-        Artifact a = new Artifact();
+        Power a = new Power();
         a.setName("Remembrall");
         a.setDescription("A Remembrall was a magical large marble-sized glass ball that contained smoke which turned red when its owner or user had forgotten something. It turned clear once whatever was forgotten was remembered.");
         a.setImageUrl("ImageUrl");
 
         String json = this.objectMapper.writeValueAsString(a);
 
-        this.mockMvc.perform(post(this.baseUrl + "/artifacts").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(post(this.baseUrl + "/powers").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Add Success"))
@@ -111,7 +106,7 @@ class ArtifactControllerIntegrationTest {
                 .andExpect(jsonPath("$.data.name").value("Remembrall"))
                 .andExpect(jsonPath("$.data.description").value("A Remembrall was a magical large marble-sized glass ball that contained smoke which turned red when its owner or user had forgotten something. It turned clear once whatever was forgotten was remembered."))
                 .andExpect(jsonPath("$.data.imageUrl").value("ImageUrl"));
-        this.mockMvc.perform(get(this.baseUrl + "/artifacts").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(get(this.baseUrl + "/powers").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Find All Success"))
@@ -122,7 +117,7 @@ class ArtifactControllerIntegrationTest {
     @DisplayName("Check addArtifact with invalid input (POST)")
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     void testAddArtifactErrorWithInvalidInput() throws Exception {
-        Artifact a = new Artifact();
+        Power a = new Power();
         a.setName(""); // Name is not provided.
         a.setDescription(""); // Description is not provided.
         a.setImageUrl(""); // ImageUrl is not provided.
@@ -147,7 +142,7 @@ class ArtifactControllerIntegrationTest {
     @Test
     @DisplayName("Check updateArtifact with valid input (PUT)")
     void testUpdateArtifactSuccess() throws Exception {
-        Artifact a = new Artifact();
+        Power a = new Power();
         a.setId(2L);
         a.setName("Updated artifact name");
         a.setDescription("Updated description");
@@ -168,7 +163,7 @@ class ArtifactControllerIntegrationTest {
     @Test
     @DisplayName("Check updateArtifact with non-existent id (PUT)")
     void testUpdateArtifactErrorWithNonExistentId() throws Exception {
-        Artifact a = new Artifact();
+        Power a = new Power();
         a.setId(10L); // This id does not exist in the database.
         a.setName("Updated artifact name");
         a.setDescription("Updated description");
@@ -179,14 +174,14 @@ class ArtifactControllerIntegrationTest {
         this.mockMvc.perform(put(this.baseUrl + "/artifacts/10").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
-                .andExpect(jsonPath("$.message").value("Could not find Artifact with id:10"))
+                .andExpect(jsonPath("$.message").value("Could not find Power with id:10"))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 
     @Test
     @DisplayName("Check updateArtifact with invalid input (PUT)")
     void testUpdateArtifactErrorWithInvalidInput() throws Exception {
-        Artifact a = new Artifact();
+        Power a = new Power();
         a.setId(1L); // Valid id
         a.setName(""); // Updated name is empty.
         a.setDescription(""); // Updated description is empty.
@@ -215,11 +210,11 @@ class ArtifactControllerIntegrationTest {
         this.mockMvc.perform(delete(this.baseUrl + "/artifacts/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
-                .andExpect(jsonPath("$.message").value("Artifact deleted"));
+                .andExpect(jsonPath("$.message").value("Power deleted"));
         this.mockMvc.perform(get(this.baseUrl + "/artifacts/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
-                .andExpect(jsonPath("$.message").value("Could not find Artifact not found with id:1"))
+                .andExpect(jsonPath("$.message").value("Could not find Power not found with id:1"))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 
@@ -229,7 +224,7 @@ class ArtifactControllerIntegrationTest {
         this.mockMvc.perform(delete(this.baseUrl + "/artifacts/10").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
-                .andExpect(jsonPath("$.message").value("Could not find Artifact not found with id:10"))
+                .andExpect(jsonPath("$.message").value("Could not find Power not found with id:10"))
                 .andExpect(jsonPath("$.data").isEmpty());
     }
 
@@ -247,7 +242,7 @@ class ArtifactControllerIntegrationTest {
         requestParams.add("sort", "name,asc");
 
         // When and then
-        this.mockMvc.perform(post(this.baseUrl + "/artifacts/search").contentType(MediaType.APPLICATION_JSON).content(json).params(requestParams).accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(post(this.baseUrl + "/powers/search").contentType(MediaType.APPLICATION_JSON).content(json).params(requestParams).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Search Success"))
@@ -268,7 +263,7 @@ class ArtifactControllerIntegrationTest {
         requestParams.add("sort", "name,asc");
 
         // When and then
-        this.mockMvc.perform(post(this.baseUrl + "/artifacts/search").contentType(MediaType.APPLICATION_JSON).content(json).params(requestParams).accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(post(this.baseUrl + "/powers/search").contentType(MediaType.APPLICATION_JSON).content(json).params(requestParams).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Search Success"))

@@ -78,7 +78,7 @@ public class WizardController {
     public Result assignArtifact(@PathVariable String wizardId, @PathVariable String artifactId)
     {
         this.wizardService.assignArtifact(Long.parseLong(wizardId),Long.valueOf(artifactId));
-        return new Result(true,"Artifact assignment success",StatusCode.SUCCESS);
+        return new Result(true,"Power assignment success",StatusCode.SUCCESS);
     }
 
 

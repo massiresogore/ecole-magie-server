@@ -1,13 +1,10 @@
 package emcer.cg.fr.gestionutilisateuronline.wizard;
 
-import emcer.cg.fr.gestionutilisateuronline.artifact.Artifact;
-import emcer.cg.fr.gestionutilisateuronline.artifact.ArtifactRepository;
+import emcer.cg.fr.gestionutilisateuronline.power.Power;
+import emcer.cg.fr.gestionutilisateuronline.power.PowerRepository;
 import emcer.cg.fr.gestionutilisateuronline.system.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
-
-import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -15,11 +12,11 @@ import java.util.List;
 public class WizardService {
 
     public WizardRepository wizardRepository;
-    public ArtifactRepository artifactRepository;
+    public PowerRepository powerRepository;
 
-    public WizardService(WizardRepository wizardRepository, ArtifactRepository artifactRepository) {
+    public WizardService(WizardRepository wizardRepository, PowerRepository powerRepository) {
         this.wizardRepository = wizardRepository;
-        this.artifactRepository = artifactRepository;
+        this.powerRepository = powerRepository;
     }
 
     public List<Wizard> findAll()
@@ -36,7 +33,7 @@ public class WizardService {
         Wizard wisardToBeDeleted=  this.wizardRepository.findById(idWizard).
                 orElseThrow(()->new ObjectNotFoundException(Wizard.class.getSimpleName(),idWizard));
 
-        //Avnat de supprimer on doit supprimer les lien entre ces artifacts
+        //Avnat de supprimer on doit supprimer les lien entre ces powers
         wisardToBeDeleted.removeAllArtifacts();
         this.wizardRepository.deleteById(idWizard);
     }
@@ -60,8 +57,8 @@ public class WizardService {
     {
 
         //Find artifact by id From DB
-        Artifact artifactTobeAssigned = this.artifactRepository.findById(artifactId).orElseThrow(
-                () -> new ObjectNotFoundException(Artifact.class.getSimpleName(), artifactId)
+        Power powerTobeAssigned = this.powerRepository.findById(artifactId).orElseThrow(
+                () -> new ObjectNotFoundException(Power.class.getSimpleName(), artifactId)
         );
 
         //Find wizard by id from DB
@@ -69,15 +66,15 @@ public class WizardService {
                 () -> new ObjectNotFoundException(Wizard.class.getSimpleName(), wizardId)
         );
 
-        //Artifact assignment
+        //Power assignment
         //We need to see if the artifact is already owned by some wizard
-        if(artifactTobeAssigned.getOwner() != null){
-            artifactTobeAssigned.getOwner().removeArtifact(artifactTobeAssigned);
+        if(powerTobeAssigned.getOwner() != null){
+            powerTobeAssigned.getOwner().removeArtifact(powerTobeAssigned);
         }
 
-        wizard.addArtifact(artifactTobeAssigned);
+        wizard.addArtifact(powerTobeAssigned);
 
-        this.artifactRepository.save(artifactTobeAssigned);
+        this.powerRepository.save(powerTobeAssigned);
 
     }
 

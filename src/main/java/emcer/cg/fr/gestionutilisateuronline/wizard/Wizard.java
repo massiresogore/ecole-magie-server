@@ -1,6 +1,6 @@
 package emcer.cg.fr.gestionutilisateuronline.wizard;
 
-import emcer.cg.fr.gestionutilisateuronline.artifact.Artifact;
+import emcer.cg.fr.gestionutilisateuronline.power.Power;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -29,14 +29,14 @@ public class Wizard implements Serializable {
             private Wizard owner;
          */
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "owner")
-    List<Artifact> artifacts = new ArrayList<>();
+    List<Power> powers = new ArrayList<>();
 
-    public List<Artifact> getArtifacts() {
-        return artifacts;
+    public List<Power> getArtifacts() {
+        return powers;
     }
 
-    public void setArtifacts(List<Artifact> artifacts) {
-        this.artifacts = artifacts;
+    public void setArtifacts(List<Power> powers) {
+        this.powers = powers;
     }
 
     public Long getId() {
@@ -55,11 +55,11 @@ public class Wizard implements Serializable {
         this.name = name;
     }
 
-    public void addArtifact(Artifact artifact) {
-        //We set the owner of the artifact to the current wizard
-        artifact.setOwner(this);
-        //we add the artifact to this wizard
-        this.artifacts.add(artifact);
+    public void addArtifact(Power power) {
+        //We set the owner of the power to the current wizard
+        power.setOwner(this);
+        //we add the power to this wizard
+        this.powers.add(power);
     }
 
     public Integer getNumberOfArtifacts() {
@@ -68,13 +68,13 @@ public class Wizard implements Serializable {
 
     public void removeAllArtifacts()
     {
-        this.artifacts.stream().forEach(artifact->artifact.setOwner(null));
-        this.artifacts = null;
+        this.powers.stream().forEach(artifact->artifact.setOwner(null));
+        this.powers = null;
     }
 
-    public void removeArtifact(Artifact artifactTobeAssigned) {
+    public void removeArtifact(Power powerTobeAssigned) {
         //remove artifact owner
-        artifactTobeAssigned.setOwner(null);
-        this.artifacts.remove(artifactTobeAssigned);
+        powerTobeAssigned.setOwner(null);
+        this.powers.remove(powerTobeAssigned);
     }
 }
