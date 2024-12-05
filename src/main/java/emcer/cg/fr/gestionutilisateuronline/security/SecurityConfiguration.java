@@ -69,10 +69,10 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE,this.baseUrl+"/users/**").hasAuthority("ROLE_admin")//protecting endpoint
 
                         /*Artifacts*/
-                        .requestMatchers(HttpMethod.GET,this.baseUrl+"/artifacts/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT,this.baseUrl+"/artifacts/**").hasAnyAuthority("ROLE_admin")
-                        .requestMatchers(HttpMethod.POST,this.baseUrl+"/artifacts").hasAuthority("ROLE_admin")
-                        .requestMatchers(HttpMethod.DELETE,this.baseUrl+"/artifacts/**").hasAuthority("ROLE_admin")
+                        .requestMatchers(HttpMethod.GET,this.baseUrl+ "/pouvoirs/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT,this.baseUrl+ "/pouvoirs/**").hasAnyAuthority("ROLE_admin")
+                        .requestMatchers(HttpMethod.POST,this.baseUrl+ "/pouvoirs").hasAuthority("ROLE_admin")
+                        .requestMatchers(HttpMethod.DELETE,this.baseUrl+ "/pouvoirs/**").hasAuthority("ROLE_admin")
 
                         /*Wizards*/
                         .requestMatchers(HttpMethod.GET,this.baseUrl+"/wizards/**").permitAll()

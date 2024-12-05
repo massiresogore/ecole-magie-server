@@ -8,7 +8,7 @@ import emcer.cg.fr.gestionutilisateuronline.system.StatusCode;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("${api.endpoint.base-url}/artifacts")
+@RequestMapping("${api.endpoint.base-url}/pouvoirs")
 @RestController
 public class PowerController {
     private final PowerService powerService;

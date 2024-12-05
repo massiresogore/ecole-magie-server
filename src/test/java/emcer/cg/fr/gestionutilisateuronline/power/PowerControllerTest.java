@@ -116,7 +116,7 @@ class PowerControllerTest {
         given(powerService.findById(1L)).willThrow(new ObjectNotFoundException("artifact",1L));
         //When(86) and then
         /*Fake http GET Request*/
-        this.mockMvc.perform(MockMvcRequestBuilders.get(baseUrl+"/artifacts/1")
+        this.mockMvc.perform(MockMvcRequestBuilders.get(baseUrl+ "/pouvoirs/1")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
@@ -132,7 +132,7 @@ class PowerControllerTest {
         given(powerService.findById(1L)).willReturn(this.powers.get(0));
         //When and then
         /*Fake http GET Request*/
-        this.mockMvc.perform(MockMvcRequestBuilders.get(baseUrl+"/artifacts/1") .accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(MockMvcRequestBuilders.get(baseUrl+ "/pouvoirs/1") .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Find One Success"))
@@ -146,7 +146,7 @@ class PowerControllerTest {
         given(this.powerService.findAll()).willReturn(powers);
         //Wen and Then
         this.mockMvc.perform(MockMvcRequestBuilders.
-                        get(baseUrl+"/artifacts").accept(MediaType.APPLICATION_JSON)
+                        get(baseUrl+ "/pouvoirs").accept(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
@@ -183,7 +183,7 @@ class PowerControllerTest {
         given(this.powerService.save(Mockito.any(Power.class))).willReturn(savedPower);
 
         //When and Then
-        this.mockMvc.perform(MockMvcRequestBuilders.post(baseUrl+"/artifacts")
+        this.mockMvc.perform(MockMvcRequestBuilders.post(baseUrl+ "/pouvoirs")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonArt)
                         .accept(MediaType.APPLICATION_JSON))
@@ -249,7 +249,7 @@ class PowerControllerTest {
         given(this.powerService.update(eq(1L), Mockito.any(Power.class))).willReturn(updatedPower);
 
         // When and then
-        this.mockMvc.perform(put(this.baseUrl + "/artifacts/1").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(put(this.baseUrl + "/pouvoirs/1").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Update success"))
@@ -278,7 +278,7 @@ class PowerControllerTest {
         given(this.powerService.update(eq(12L),Mockito.any(Power.class))).willThrow(new ObjectNotFoundException("artifact",12L));
 
         //When and Then
-        this.mockMvc.perform(put(baseUrl+"/artifacts/12")
+        this.mockMvc.perform(put(baseUrl+ "/pouvoirs/12")
                         .content(json)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -295,7 +295,7 @@ class PowerControllerTest {
         doNothing().when(this.powerService).delete(1L);
 
         //When and Then
-        this.mockMvc.perform(MockMvcRequestBuilders.delete(baseUrl+"/artifacts/1")
+        this.mockMvc.perform(MockMvcRequestBuilders.delete(baseUrl+ "/pouvoirs/1")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
@@ -308,7 +308,7 @@ class PowerControllerTest {
         //Given
         doThrow(new ObjectNotFoundException("artifact",12L)).when(this.powerService).delete(12L);
         //When and Then
-        this.mockMvc.perform(MockMvcRequestBuilders.delete(baseUrl+"/artifacts/12")
+        this.mockMvc.perform(MockMvcRequestBuilders.delete(baseUrl+ "/pouvoirs/12")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))

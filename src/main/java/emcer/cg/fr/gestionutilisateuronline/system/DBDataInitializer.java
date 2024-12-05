@@ -78,6 +78,9 @@ public class DBDataInitializer implements CommandLineRunner {
         w3. setName ("Neville Longbotton");
         w3.addArtifact(a5);
 
+        Wizard w4 = new Wizard();
+        w4. setName ("Gandalf Zimone");
+
 
         //Create the newest users
         EcoleUser user1 = new EcoleUser();
@@ -108,6 +111,7 @@ public class DBDataInitializer implements CommandLineRunner {
         this.wizardRepository.save(w1);
         this.wizardRepository.save(w2);
         this.wizardRepository.save(w3);
+        this.wizardRepository.save(w4);
         this.powerRepository.save(a6);
 
     }

@@ -59,7 +59,7 @@ class PowerControllerIntegrationTest {
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
         // Reset H2 database before calling this test case.
     void testFindAllArtifactsSuccess() throws Exception {
-        this.mockMvc.perform(get(this.baseUrl + "/artifacts").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(get(this.baseUrl + "/pouvoirs").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Find All Success"))
@@ -69,7 +69,7 @@ class PowerControllerIntegrationTest {
     @Test
     @DisplayName("Check findArtifactById (GET)")
     void testFindArtifactByIdSuccess() throws Exception {
-        this.mockMvc.perform(get(this.baseUrl + "/artifacts/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(get(this.baseUrl + "/pouvoirs/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Find One Success"))
@@ -80,7 +80,7 @@ class PowerControllerIntegrationTest {
     @Test
     @DisplayName("Check findArtifactById with non-existent id (GET)")
     void testFindArtifactByIdNotFound() throws Exception {
-        this.mockMvc.perform(get(this.baseUrl + "/artifacts/10").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(get(this.baseUrl + "/pouvoirs/10").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
                 .andExpect(jsonPath("$.message").value("Could not find Power not found with id:10"))
@@ -124,14 +124,14 @@ class PowerControllerIntegrationTest {
 
         String json = this.objectMapper.writeValueAsString(a);
 
-        this.mockMvc.perform(post(this.baseUrl + "/artifacts").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(post(this.baseUrl + "/pouvoirs").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.INVALID_ARGUMENT))
                 .andExpect(jsonPath("$.message").value("Provided Arguments are invalid, see data for details. "))
                 .andExpect(jsonPath("$.data.name").value("name is required."))
                 .andExpect(jsonPath("$.data.description").value("description is required."))
                 .andExpect(jsonPath("$.data.imageUrl").value("imageUrl is required."));
-        this.mockMvc.perform(get(this.baseUrl + "/artifacts").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(get(this.baseUrl + "/pouvoirs").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Find All Success"))
@@ -150,7 +150,7 @@ class PowerControllerIntegrationTest {
 
         String json = this.objectMapper.writeValueAsString(a);
 
-        this.mockMvc.perform(put(this.baseUrl + "/artifacts/2").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(put(this.baseUrl + "/pouvoirs/2").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Update success"))
@@ -171,7 +171,7 @@ class PowerControllerIntegrationTest {
 
         String json = this.objectMapper.writeValueAsString(a);
 
-        this.mockMvc.perform(put(this.baseUrl + "/artifacts/10").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(put(this.baseUrl + "/pouvoirs/10").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
                 .andExpect(jsonPath("$.message").value("Could not find Power with id:10"))
@@ -189,14 +189,14 @@ class PowerControllerIntegrationTest {
 
         String json = this.objectMapper.writeValueAsString(a);
 
-        this.mockMvc.perform(put(this.baseUrl + "/artifacts/1").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(put(this.baseUrl + "/pouvoirs/1").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.INVALID_ARGUMENT))
                 .andExpect(jsonPath("$.message").value("Provided Arguments are invalid, see data for details. "))
                 .andExpect(jsonPath("$.data.name").value("name is required."))
                 .andExpect(jsonPath("$.data.description").value("description is required."))
                 .andExpect(jsonPath("$.data.imageUrl").value("imageUrl is required."));
-        this.mockMvc.perform(get(this.baseUrl + "/artifacts/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(get(this.baseUrl + "/pouvoirs/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Find One Success"))
@@ -207,11 +207,11 @@ class PowerControllerIntegrationTest {
     @Test
     @DisplayName("Check deleteArtifact with valid input (DELETE)")
     void testDeleteArtifactSuccess() throws Exception {
-        this.mockMvc.perform(delete(this.baseUrl + "/artifacts/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(delete(this.baseUrl + "/pouvoirs/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(true))
                 .andExpect(jsonPath("$.code").value(StatusCode.SUCCESS))
                 .andExpect(jsonPath("$.message").value("Power deleted"));
-        this.mockMvc.perform(get(this.baseUrl + "/artifacts/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(get(this.baseUrl + "/pouvoirs/1").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
                 .andExpect(jsonPath("$.message").value("Could not find Power not found with id:1"))
@@ -221,7 +221,7 @@ class PowerControllerIntegrationTest {
     @Test
     @DisplayName("Check deleteArtifact with non-existent id (DELETE)")
     void testDeleteArtifactErrorWithNonExistentId() throws Exception {
-        this.mockMvc.perform(delete(this.baseUrl + "/artifacts/10").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
+        this.mockMvc.perform(delete(this.baseUrl + "/pouvoirs/10").accept(MediaType.APPLICATION_JSON).header(HttpHeaders.AUTHORIZATION, this.token))
                 .andExpect(jsonPath("$.flag").value(false))
                 .andExpect(jsonPath("$.code").value(StatusCode.NOT_FOUND))
                 .andExpect(jsonPath("$.message").value("Could not find Power not found with id:10"))

@@ -65,7 +65,7 @@ class PowerServiceTest {
               "owner": {
               "id": 2,
               "name": "Harry Potter",
-              "numberOfArtifacts": 2
+              "numberOfPowers": 2
       }
              */
         Power a = new Power();
