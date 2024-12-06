@@ -63,7 +63,8 @@ public class SecurityConfiguration {
         return httpSecurity
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         /*Ecole Admin*/
-                        .requestMatchers(HttpMethod.GET,this.baseUrl+"/users/**").hasAnyAuthority("ROLE_admin")//protecting endpoint
+                        .requestMatchers(HttpMethod.GET,this.baseUrl+"/users/**").permitAll()//protecting endpoint
+//                        .requestMatchers(HttpMethod.GET,this.baseUrl+"/users/**").hasAnyAuthority("ROLE_admin")//protecting endpoint
                         .requestMatchers(HttpMethod.POST,this.baseUrl+"/users").hasAuthority("ROLE_admin")//protecting endpoint
                         .requestMatchers(HttpMethod.PUT,this.baseUrl+"/users/**").hasAnyAuthority("ROLE_admin")//protecting endpoint
                         .requestMatchers(HttpMethod.DELETE,this.baseUrl+"/users/**").hasAuthority("ROLE_admin")//protecting endpoint
